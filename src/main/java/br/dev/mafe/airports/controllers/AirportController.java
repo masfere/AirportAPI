@@ -4,6 +4,7 @@
  */
 package br.dev.mafe.airports.controllers;
 
+import DTO.AirportMinDTO;
 import br.dev.mafe.airports.entities.Airport;
 import br.dev.mafe.airports.services.AirportService;
 import java.util.List;
@@ -47,6 +48,21 @@ public class AirportController {
             //ok devolve 200
             return ResponseEntity.ok(result);
         }
+    }
+    @GetMapping("/country/{countryName}")
+    public ResponseEntity<List<AirportMinDTO>> findByCountryIgnoreCase(@PathVariable String countryName){
+    
+        List<AirportMinDTO> result = airportService.findByCountry(countryName);
+        if (result.isEmpty()){
+            return ResponseEntity.notFound().build();
+        
+        }else {
+            return ResponseEntity.ok(result);
+        }
+    }
+
+    public AirportService getAirportService() {
+        return airportService;
     }
     
 }

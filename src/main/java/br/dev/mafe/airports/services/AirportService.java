@@ -4,6 +4,7 @@
  */
 package br.dev.mafe.airports.services;
 
+import DTO.AirportMinDTO;
 import br.dev.mafe.airports.entities.Airport;
 import br.dev.mafe.airports.repositories.AirportRepository;
 import java.util.List;
@@ -27,12 +28,22 @@ public class AirportService {
     }
     
     /**
+     * @param city
      * @param
      * @return
      */
     public List<Airport> findByCity(String city){
         List<Airport> result = airportRepository.findByCityIgnoreCase(city);
         return result;
+    }
+    
+    public List<AirportMinDTO> findByCountry(String country){
+        List<Airport> resultAirport = airportRepository.findByCountryIgnoreCase(country);
+        
+        List<AirportMinDTO> resultDTO = resultAirport.stream()
+                .map(x -> new  AirportMinDTO(x)).toList();
+        
+        return resultDTO;
     }
      
 }
